@@ -5,8 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.ameth.voltio.core.di.AppContainer
-import com.ameth.voltio.features.login.di.AuthModule
 import com.ameth.voltio.core.navigation.NavigationWrapper
+import com.ameth.voltio.features.login.di.AuthModule
+import com.ameth.voltio.features.login.presentation.navigation.LoginNavGraph
 import com.example.compose.AppTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,8 +23,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         appContainer = AppContainer(this)
         val authModule = AuthModule(appContainer)
+
+        val navGraphs = listOf(
+            LoginNavGraph(authModule.provideLoginViewModelFactory())
+        )
 
         enableEdgeToEdge()
         setContent {
@@ -36,6 +42,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
+                NavigationWrapper(navGraphs = navGraphs)
             }
         }
     }

@@ -1,17 +1,21 @@
 package com.ameth.voltio.core.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHost
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.composable
-import com.ameth.voltio.features.login.presentation.screens.LoginScreen
 
 @Composable
-fun NavigationWrapper() {
+fun NavigationWrapper(
+    navGraphs: List<FeatureNavGraph>
+) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Login) {
-        composable<Login> {
-            LoginScreen()
+
+    NavHost(
+        navController = navController,
+        startDestination = Login
+    ) {
+        navGraphs.forEach { graph ->
+            graph.registerGraph(this, navController)
         }
     }
 }
