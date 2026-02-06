@@ -1,7 +1,8 @@
-package com.ameth.voltio.features.products.data.datasource.remote.mapper
+package com.miltonvaz.voltio_1.features.products.data.datasource.remote.mapper
 
-import com.ameth.voltio.features.products.data.datasource.remote.model.SpecificationDto
-import com.ameth.voltio.features.products.domain.entities.Specification
+import com.miltonvaz.voltio_1.features.products.data.datasource.remote.model.SpecificationDto
+import com.miltonvaz.voltio_1.features.products.domain.entities.Specification
+
 
 fun SpecificationDto.toDomain(): Specification {
     return Specification(

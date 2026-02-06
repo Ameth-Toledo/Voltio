@@ -1,5 +1,4 @@
-package com.ameth.voltio.features.products.presentation.components
-
+package com.miltonvaz.voltio_1.features.products.presentation.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

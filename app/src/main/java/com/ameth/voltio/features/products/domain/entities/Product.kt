@@ -1,4 +1,4 @@
-package com.ameth.voltio.features.products.domain.entities
+package com.miltonvaz.voltio_1.features.products.domain.entities
 
 data class Product(
     val id: Int,
@@ -12,3 +12,4 @@ data class Product(
     val registerDate: String,
     val specifications: List<Specification> = emptyList()
 )
+

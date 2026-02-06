@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ameth.voltio.ui.theme.VoltioTheme
-
 class MainActivity : ComponentActivity() {
     lateinit var appContainer: AppContainer
 
@@ -25,42 +24,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         appContainer = AppContainer(this)
+
         val authModule = AuthModule(appContainer)
+        val productModule = ProductModule(appContainer)
 
         val navGraphs = listOf(
-            LoginNavGraph(authModule.provideLoginViewModelFactory())
+            LoginNavGraph(authModule.provideLoginViewModelFactory()),
+            ProductNavGraph(productModule.provideProductViewModelFactory())
         )
 
         enableEdgeToEdge()
         setContent {
             AppTheme {
-                NavigationWrapper()
-            VoltioTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
                 NavigationWrapper(navGraphs = navGraphs)
             }
         }
     }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    VoltioTheme {
-        Greeting("Android")
-    }
-}
 }

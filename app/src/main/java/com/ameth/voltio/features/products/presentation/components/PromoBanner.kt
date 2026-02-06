@@ -1,4 +1,4 @@
-package com.ameth.voltio.features.products.presentation.components
+package com.miltonvaz.voltio_1.features.products.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,8 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ameth.voltio.R
-import com.ameth.voltio.core.ui.theme.displayFontFamily
+import com.miltonvaz.voltio_1.R
+import com.miltonvaz.voltio_1.core.ui.theme.displayFontFamily
 
 @Composable
 fun PromoBanner() {

@@ -1,15 +1,18 @@
-package com.ameth.voltio.features.products.domain.usecase
+package com.miltonvaz.voltio_1.features.products.domain.usecase
 
-import com.ameth.voltio.features.products.data.datasource.remote.model.CreateProductRequest
-import com.ameth.voltio.features.products.domain.entities.Product
-import com.ameth.voltio.features.products.domain.repositories.IProductRepository
+import com.miltonvaz.voltio_1.features.products.data.datasource.remote.model.CreateProductRequest
+import com.miltonvaz.voltio_1.features.products.domain.entities.Product
+import com.miltonvaz.voltio_1.features.products.domain.repositories.IProductRepository
 
-class UpdateProductUseCase(
-    private val repository: IProductRepository
-) {
-    suspend operator fun invoke(id: Int, request: CreateProductRequest): Result<Product> {
+class UpdateProductUseCase(private val repository: IProductRepository) {
+    suspend operator fun invoke(
+        token: String,
+        id: Int,
+        request: CreateProductRequest,
+        imageBytes: ByteArray? = null
+    ): Result<Product> {
         return try {
-            val product = repository.updateProduct(id, request)
+            val product = repository.updateProduct(token, id, request, imageBytes)
             Result.success(product)
         } catch (e: Exception) {
             Result.failure(e)

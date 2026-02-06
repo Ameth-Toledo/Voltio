@@ -1,10 +1,10 @@
-package com.ameth.voltio.features.products.di
+package com.miltonvaz.voltio_1.features.products.di
 
-import com.ameth.voltio.core.di.AppContainer
-import com.ameth.voltio.features.products.data.datasource.remote.ProductApiService
-import com.ameth.voltio.features.products.data.repositories.ProductRepositoryImpl
-import com.ameth.voltio.features.products.domain.usecase.*
-import com.ameth.voltio.features.products.presentation.viewmodel.ProductViewModelFactory
+import com.miltonvaz.voltio_1.core.di.AppContainer
+import com.miltonvaz.voltio_1.features.products.data.datasource.remote.ProductApiService
+import com.miltonvaz.voltio_1.features.products.data.repositories.ProductRepositoryImpl
+import com.miltonvaz.voltio_1.features.products.domain.usecase.*
+import com.miltonvaz.voltio_1.features.products.presentation.viewmodel.ProductViewModelFactory
 
 class ProductModule(private val appContainer: AppContainer) {
 
@@ -16,29 +16,21 @@ class ProductModule(private val appContainer: AppContainer) {
         ProductRepositoryImpl(productApiService)
     }
 
-    private val getProductsUseCase by lazy {
-        GetProductsUseCase(productRepository)
-    }
-    private val deleteProductUseCase by lazy {
-        DeleteProductUseCase(productRepository)
-    }
-    private val getProductByIdUseCase by lazy {
-        GetProductByIdUseCase(productRepository)
-    }
-    private val createProductUseCase by lazy {
-        CreateProductUseCase(productRepository)
-    }
-    private val updateProductUseCase by lazy {
-        UpdateProductUseCase(productRepository)
-    }
+    private val getProductsUseCase by lazy { GetProductsUseCase(productRepository) }
+    private val deleteProductUseCase by lazy { DeleteProductUseCase(productRepository) }
+    private val getProductByIdUseCase by lazy { GetProductByIdUseCase(productRepository) }
+    private val createProductUseCase by lazy { CreateProductUseCase(productRepository) }
+    private val updateProductUseCase by lazy { UpdateProductUseCase(productRepository) }
 
-    fun provideProductViewModelFactory(): ProductViewModelFactory {
+    fun provideProductViewModelFactory(productId: Int = -1): ProductViewModelFactory {
         return ProductViewModelFactory(
-            getProductsUseCase,
-            getProductByIdUseCase,
-            createProductUseCase,
-            updateProductUseCase,
-            deleteProductUseCase
+            productId = productId,
+            getProductsUseCase = getProductsUseCase,
+            getProductByIdUseCase = getProductByIdUseCase,
+            createProductUseCase = createProductUseCase,
+            updateProductUseCase = updateProductUseCase,
+            deleteProductUseCase = deleteProductUseCase,
+            tokenManager = appContainer.sessionManager
         )
     }
 }

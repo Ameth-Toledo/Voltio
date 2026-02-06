@@ -1,10 +1,13 @@
-package com.ameth.voltio.features.products.presentation.components
+package com.miltonvaz.voltio_1.features.products.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,47 +18,48 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ameth.voltio.R
-
+import com.miltonvaz.voltio_1.R
 @Composable
 fun AdminHeader(title: String, subtitle: String) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                Color(0xFFCED9ED),
-                shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)
+
+    Column(modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.voltio),
+                contentDescription = null,
+                modifier = Modifier.size(42.dp)
             )
-            .padding(24.dp)
-    ) {
-        Column {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+            Surface(
+                modifier = Modifier.size(40.dp),
+                shape = CircleShape,
+                color = Color.White.copy(alpha = 0.3f),
+                border = androidx.compose.foundation.BorderStroke(1.dp, Color.White.copy(alpha = 0.5f))
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.voltio),
+                Icon(
+                    imageVector = androidx.compose.material.icons.Icons.Default.Person,
                     contentDescription = null,
-                    modifier = Modifier.size(40.dp)
+                    modifier = Modifier.padding(8.dp),
+                    tint = Color(0xFF1E293B)
                 )
-                Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFF1A1C2E).copy(alpha = 0.2f)),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.voltio),
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(title, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color(0xFF1A1C2E))
-            Text(subtitle, fontSize = 14.sp, color = Color(0xFF616161))
         }
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(
+            text = title,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.ExtraBold,
+            color = Color(0xFF1E293B),
+            letterSpacing = (-0.5).sp
+        )
+        Text(
+            text = subtitle,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color(0xFF1E293B).copy(alpha = 0.6f)
+        )
     }
 }

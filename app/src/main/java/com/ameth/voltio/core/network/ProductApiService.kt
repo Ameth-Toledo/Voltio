@@ -13,20 +13,51 @@ import retrofit2.http.Path
 interface ProductApiService {
 
     @GET("products")
-    suspend fun getProducts(): List<ProductDto>
+    suspend fun getProducts(
+        @Header("Authorization") token: String,
+        @Header("Cookie") cookie: String
+    ): List<ProductDto>
 
     @GET("products/{id}")
-    suspend fun getProductById(@Path("id") id: Int): ProductDto
+    suspend fun getProductById(
+        @Header("Authorization") token: String,
+        @Header("Cookie") cookie: String,
+        @Path("id") id: Int
+    ): ProductDto
 
-    @GET("products/category/{id_categoria}")
-    suspend fun getProductsByCategory(@Path("id_categoria") categoryId: Int): List<ProductDto>
-
+    // Para crear con imagen, DEBE ser Multipart
+    @Multipart
     @POST("products")
-    suspend fun createProduct(@Body request: CreateProductRequest): ProductDto
+    suspend fun createProduct(
+        @Header("Authorization") token: String,
+        @Header("Cookie") cookie: String,
+        @Part("sku") sku: RequestBody,
+        @Part("nombre") nombre: RequestBody,
+        @Part("descripcion") descripcion: RequestBody?,
+        @Part("precio_venta") precio_venta: RequestBody,
+        @Part("stock_actual") stock_actual: RequestBody,
+        @Part("id_categoria") id_categoria: RequestBody?,
+        @Part imagen: MultipartBody.Part? = null // Esto llega como req.file en Express
+    ): ProductDto
 
+    @Multipart
     @PUT("products/{id}")
-    suspend fun updateProduct(@Path("id") id: Int, @Body request: CreateProductRequest): ProductDto
-
+    suspend fun updateProduct(
+        @Header("Authorization") token: String,
+        @Header("Cookie") cookie: String,
+        @Path("id") id: Int,
+        @Part("sku") sku: RequestBody,
+        @Part("nombre") nombre: RequestBody,
+        @Part("descripcion") descripcion: RequestBody?,
+        @Part("precio_venta") precio_venta: RequestBody,
+        @Part("stock_actual") stock_actual: RequestBody,
+        @Part("id_categoria") id_categoria: RequestBody?,
+        @Part imagen: MultipartBody.Part? = null
+    ): ProductDto
     @DELETE("products/{id}")
-    suspend fun deleteProduct(@Path("id") id: Int): Response<Unit>
+    suspend fun deleteProduct(
+        @Header("Authorization") token: String,
+        @Header("Cookie") cookie: String,
+        @Path("id") id: Int
+    ): Response<Unit>
 }

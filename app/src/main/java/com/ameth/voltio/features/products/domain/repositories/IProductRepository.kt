@@ -1,12 +1,23 @@
-package com.ameth.voltio.features.products.domain.repositories
+package com.miltonvaz.voltio_1.features.products.domain.repositories
 
-import com.ameth.voltio.features.products.data.datasource.remote.model.CreateProductRequest
-import com.ameth.voltio.features.products.domain.entities.Product
+import com.miltonvaz.voltio_1.features.products.data.datasource.remote.model.CreateProductRequest
+import com.miltonvaz.voltio_1.features.products.domain.entities.Product
 
 interface IProductRepository {
-    suspend fun getProducts(): List<Product>
-    suspend fun getProductById(id: Int): Product
-    suspend fun createProduct(request: CreateProductRequest): Product
-    suspend fun updateProduct(id: Int, request: CreateProductRequest): Product
-    suspend fun deleteProduct(id: Int)
+    suspend fun getProducts(token: String): List<Product>
+    suspend fun getProductById(token: String, id: Int): Product
+
+    suspend fun createProduct(
+        token: String,
+        request: CreateProductRequest,
+        imageBytes: ByteArray?
+    ): Product
+
+    suspend fun updateProduct(
+        token: String,
+        id: Int,
+        request: CreateProductRequest,
+        imageBytes: ByteArray?
+    ): Product
+    suspend fun deleteProduct(token: String, id: Int)
 }

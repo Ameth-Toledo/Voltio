@@ -1,10 +1,11 @@
-package com.ameth.voltio.features.products.presentation.viewmodel
+package com.miltonvaz.voltio_1.features.products.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ameth.voltio.features.products.domain.usecase.DeleteProductUseCase
-import com.ameth.voltio.features.products.domain.usecase.GetProductsUseCase
-import com.ameth.voltio.features.products.presentation.screens.UiState.HomeUiState
+import com.miltonvaz.voltio_1.core.network.TokenManager
+import com.miltonvaz.voltio_1.features.products.domain.usecase.DeleteProductUseCase
+import com.miltonvaz.voltio_1.features.products.domain.usecase.GetProductsUseCase
+import com.miltonvaz.voltio_1.features.products.presentation.screens.UiState.HomeUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -12,7 +13,8 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getProductsUseCase: GetProductsUseCase,
-    private val deleteProductUseCase: DeleteProductUseCase
+    private val deleteProductUseCase: DeleteProductUseCase,
+    private val tokenManager: TokenManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -25,7 +27,9 @@ class HomeViewModel(
     fun loadProducts() {
         _uiState.update { it.copy(isLoading = true, error = null) }
         viewModelScope.launch {
-            val result = getProductsUseCase()
+            val token = tokenManager.getToken() ?: ""
+            val result = getProductsUseCase(token)
+
             _uiState.update { currentState ->
                 result.fold(
                     onSuccess = { products ->
@@ -41,7 +45,9 @@ class HomeViewModel(
 
     fun deleteProduct(id: Int) {
         viewModelScope.launch {
-            val result = deleteProductUseCase(id)
+            val token = tokenManager.getToken() ?: ""
+            val result = deleteProductUseCase(token, id)
+
             result.onSuccess {
                 loadProducts()
             }.onFailure { error ->
@@ -49,5 +55,4 @@ class HomeViewModel(
             }
         }
     }
-
 }

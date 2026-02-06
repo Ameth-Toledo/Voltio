@@ -1,4 +1,4 @@
-package com.ameth.voltio.features.products.domain.entities
+package com.miltonvaz.voltio_1.features.products.domain.entities
 
 data class Specification(
     val id: Int,

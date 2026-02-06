@@ -7,9 +7,23 @@ import com.ameth.voltio.features.login.domain.repositories.IAuthRepository
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class AppContainer(context: Context) {
-    private val retrofit: Retrofit = Retrofit.Builder()
+class AppContainer(private val context: Context) {
+
+    val sessionManager: TokenManager by lazy {
+        TokenManager(context)
+    }
+
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .build()
+
+    val retrofit: Retrofit = Retrofit.Builder()
         .baseUrl("https://voltio.ameth.shop/api/")
+        .client(client)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 

@@ -1,4 +1,6 @@
-package com.ameth.voltio.features.products.data.datasource.remote.model
+package com.miltonvaz.voltio_1.features.products.data.datasource.remote.model
+
+
 
 data class ProductDto(
     val id_producto: Int,

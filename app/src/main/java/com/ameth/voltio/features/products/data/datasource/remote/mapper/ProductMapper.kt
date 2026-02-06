@@ -1,7 +1,8 @@
-package com.ameth.voltio.features.products.data.datasource.remote.mapper
+package com.miltonvaz.voltio_1.features.products.data.datasource.remote.mapper
 
-import com.ameth.voltio.features.products.data.datasource.remote.model.ProductDto
-import com.ameth.voltio.features.products.domain.entities.Product
+import com.miltonvaz.voltio_1.features.products.data.datasource.remote.model.ProductDto
+import com.miltonvaz.voltio_1.features.products.domain.entities.Product
+
 
 fun ProductDto.toDomain(): Product {
     return Product(
@@ -17,3 +18,4 @@ fun ProductDto.toDomain(): Product {
         specifications = this.especificaciones?.map { it.toDomain() } ?: emptyList()
     )
 }
+
